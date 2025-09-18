@@ -1,0 +1,79 @@
+"""
+Proyecto: Análisis de Marketing 2025
+Autor: Almudena Lorca
+Descripción:
+Este script lee un dataset de marketing desde Excel, calcula KPIs
+como conversiones, clics, costes y ratios, y genera gráficos.
+Dependencias: pandas, matplotlib, openpyxl
+"""
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+# --- Rutas ---
+DATA_PATH = "../data/Tabla_Hechos_Marketing.xlsx"
+IMAGES_PATH = "../images"
+
+# Crear carpeta images si no existe
+os.makedirs(IMAGES_PATH, exist_ok=True)
+
+# --- Leer dataset ---
+df = pd.read_excel(DATA_PATH)
+
+# --- 4️⃣ Total conversiones por campaña ---
+df_conversiones = df.groupby('Campaña: Nombre de campaña')['Σ Rendimiento: Conversiones'].sum().reset_index()
+plt.figure(figsize=(8,5))
+plt.bar(df_conversiones['Campaña: Nombre de campaña'], df_conversiones['Σ Rendimiento: Conversiones'], color='skyblue')
+for i, v in enumerate(df_conversiones['Σ Rendimiento: Conversiones']):
+    plt.text(i, v + 5, str(v), ha='center', fontweight='bold')
+plt.title('4️⃣ Total de conversiones por campaña')
+plt.xlabel('Campaña')
+plt.ylabel('Total conversiones')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig(os.path.join(IMAGES_PATH, "total_conversiones_campaña.png"))
+plt.show()
+
+# --- 5️⃣ Ratio total de conversiones por campaña ---
+df['ratio_conversiones'] = df['Σ Rendimiento: Conversiones'] / df['Σ Rendimiento: Clics']
+df_ratio = df.groupby('Campaña: Nombre de campaña')['ratio_conversiones'].mean().reset_index()
+plt.figure(figsize=(8,5))
+plt.bar(df_ratio['Campaña: Nombre de campaña'], df_ratio['ratio_conversiones'], color='orange')
+for i, v in enumerate(df_ratio['ratio_conversiones']):
+    plt.text(i, v + 0.0001, f"{v:.4f}", ha='center', fontweight='bold')
+plt.title('5️⃣ Ratio de conversiones por campaña')
+plt.xlabel('Campaña')
+plt.ylabel('Ratio conversiones/clics')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig(os.path.join(IMAGES_PATH, "ratio_conversiones_campaña.png"))
+plt.show()
+
+# --- 6️⃣ Coste total por campaña ---
+df_coste = df.groupby('Campaña: Nombre de campaña')['Σ Coste: Importe gastado'].sum().reset_index()
+plt.figure(figsize=(8,5))
+plt.bar(df_coste['Campaña: Nombre de campaña'], df_coste['Σ Coste: Importe gastado'], color='green')
+for i, v in enumerate(df_coste['Σ Coste: Importe gastado']):
+    plt.text(i, v + 5, f"{v:.2f}", ha='center', fontweight='bold')
+plt.title('6️⃣ Coste total por campaña')
+plt.xlabel('Campaña')
+plt.ylabel('Coste (€)')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig(os.path.join(IMAGES_PATH, "coste_total_campaña.png"))
+plt.show()
+
+# --- 7️⃣ Clics totales por campaña ---
+df_clics = df.groupby('Campaña: Nombre de campaña')['Σ Rendimiento: Clics'].sum().reset_index()
+plt.figure(figsize=(8,5))
+plt.bar(df_clics['Campaña: Nombre de campaña'], df_clics['Σ Rendimiento: Clics'], color='purple')
+for i, v in enumerate(df_clics['Σ Rendimiento: Clics']):
+    plt.text(i, v + 5, str(v), ha='center', fontweight='bold')
+plt.title('7️⃣ Clics totales por campaña')
+plt.xlabel('Campaña')
+plt.ylabel('Clics')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig(os.path.join(IMAGES_PATH, "clics_total_campaña.png"))
+plt.show()
