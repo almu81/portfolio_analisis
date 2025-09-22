@@ -1,6 +1,4 @@
-# Crear el contenido del README como un vector de texto
-readme_text <- c(
-  "# Portfolio Análisis Marketing - Python",
+ "# Portfolio Análisis Marketing - Python",
   "",
   "## 🔹 Descripción",
   "**Dataset:** Datos de campañas de marketing, conversiones, clics, costes y visualizaciones.", 
