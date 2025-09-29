@@ -1,6 +1,6 @@
 """
 Proyecto: Análisis de Marketing 2025
-Autor: Almudena Lorca
+Autor: Almudena
 Descripción:
 Este script lee un dataset de marketing desde Excel, calcula KPIs
 como conversiones, clics, costes y ratios, y genera gráficos.
@@ -14,9 +14,6 @@ import os
 # --- Rutas ---
 DATA_PATH = "../data/Tabla_Hechos_Marketing.xlsx"
 IMAGES_PATH = "../images"
-
-# Crear carpeta images si no existe
-os.makedirs(IMAGES_PATH, exist_ok=True)
 
 # --- Leer dataset ---
 df = pd.read_excel(DATA_PATH)
